@@ -60,4 +60,4 @@ target/
 venv
 
 .idea
-kabbagewastaken/db.sqlite3
+db.sqlite3
