@@ -1,6 +1,8 @@
 __author__ = 'tim'
 
-from .settings import *
+from .base_settings import *
+
+import os
 
 DEBUG = True
 
@@ -13,3 +15,4 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
