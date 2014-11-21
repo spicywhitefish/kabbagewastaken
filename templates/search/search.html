@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block styles %}
+    {{ block.super }}
+    <link href="{% static "css/search.css" %}" rel="stylesheet" type="text/css">
+{% endblock styles %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1>The Kabbage was taken,</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>...and we can't be bothered to look for it.</h2>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">This is your moment to shine!</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="well">
+                                        <legend>Find the Kabbage.</legend>
+                                        <div class="form-group">
+                                            <label class="control-label">I'll check</label>
+                                            <button class="btn btn-xs">Twitter</button>
+                                            <button class="btn btn-xs">Wikipedia</button>
+                                            <span>or</span>
+                                            <button class="btn btn-xs">Both</button>
+                                            <label class="control-label">, because I know that the Kabbage is...</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="where could it be?">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span>&nbsp;Start Foraging</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

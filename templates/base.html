@@ -1,0 +1,13 @@
+{% load staticfiles %}
+<html>
+<head>
+    <title>{% block title %}Kabbage Was Taken{% endblock title %}</title>
+    {% block styles %}
+        <link href="{% static "css/sandstone_bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="screen">
+    {% endblock styles %}
+</head>
+<body>
+    {% block body %}
+    {% endblock body %}
+</body>
+</html>
