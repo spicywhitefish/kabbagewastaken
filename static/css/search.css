@@ -1,0 +1,10 @@
+.search-panel, .search-well {
+    margin-bottom: 0;
+}
+.search-well .progress {
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+.results-tabs {
+    margin-bottom: 15px;
+}
