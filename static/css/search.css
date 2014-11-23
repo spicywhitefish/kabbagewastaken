@@ -1,3 +1,6 @@
+.main-container {
+    min-height: 1000px;
+}
 .search-panel, .search-well {
     margin-bottom: 0;
 }
@@ -7,4 +10,15 @@
 }
 .results-tabs {
     margin-bottom: 15px;
+}
+.search-source-close {
+    font-size: 0.9em;
+    padding: 0px 0px 0px 7px;
+    color: whitesmoke;
+    padding-top: 3px;
+}
+#open-buttons {
+    font-size: 0.7em;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
