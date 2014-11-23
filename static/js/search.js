@@ -1,4 +1,20 @@
-$(function(){
+jQuery.extend({
+    getQueryParameters : function(str) {
+	    return (str || document.location.search).replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+    }
+
+});
+$(function() {
+    loadPage();
+});
+$(window).on("popstate", function(){
+    loadPage();
+});
+function loadPage() {
+    addListeners();
+    repopulateSearchForm();
+}
+function addListeners() {
     $(".search-source-btn").click(function() {
         var $this = $(this);
         $this.css('height', "");
@@ -36,4 +52,38 @@ $(function(){
         });
         $("#both-button").html("both");
     });
-});
+    $("#search-form").submit(function(event){
+        var $this = $(this);
+        event.preventDefault();
+        $search_progress = $("#search-progress");
+        $search_progress.fadeIn(200).removeClass("hidden");
+        $.ajax({
+            type: "POST",
+            data: $this.serialize(),
+            dataType: "json",
+            success: function(response) {
+                $search_progress.fadeOut(200);
+                $("#results-container").html(response['reason']);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $search_progress.fadeOut(200);
+                $("#results-container").html(jQuery.parseJSON(jqXHR.responseText)['reason']);
+            }
+        });
+    });
+}
+function repopulateSearchForm() {
+    var queryParams = $.getQueryParameters();
+    var source = queryParams["source"];
+    if (source) {
+        $("#"+source+"-button").click();
+    }
+    var q = queryParams["q"]
+    console.log()
+    if (q) {
+        $("input[name=q]").val(q);
+    }
+    if (source && q) {
+        $("#search-form").submit();
+    }
+}

@@ -29,33 +29,37 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="well search-well">
-                                        <div class="form-group">
-                                            <label class="control-label">I'll check</label>
-                                            <span id="source-input">
-                                                <button class="btn btn-xs search-source-btn" data-choice="twitter">Twitter</button>
-                                                <span>,</span>
-                                                <button class="btn btn-xs search-source-btn" data-choice="wikipedia">Wikipedia</button>
-                                                <span>,</span>
-                                                <span>or</span>
-                                                <button id="both-button" class="btn btn-xs search-source-btn" data-choice="both">Both</button>
-                                            </span>
-                                            <span></span>
-                                            <label class="control-label">, because I know that the Kabbage is...</label>
-                                            <button id="open-buttons" class="btn btn-xs btn-danger hidden">Somewhere else?</button>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="where could it be?">
-                                                <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span>&nbsp;Start Foraging</button>
+                                    <form id="search-form" method="GET">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="source" />
+                                        <div class="well search-well">
+                                            <div class="form-group">
+                                                <label id="check-label" class="control-label">I'll check</label>
+                                                <span id="source-input">
+                                                    <button id="twitter-button" type="button" class="btn btn-xs search-source-btn" data-choice="twitter">Twitter</button>
+                                                    <span>,</span>
+                                                    <button id="wikipedia-button" type="button" class="btn btn-xs search-source-btn" data-choice="wikipedia">Wikipedia</button>
+                                                    <span>,</span>
+                                                    <span>or</span>
+                                                    <button id="both-button" type="button" class="btn btn-xs search-source-btn" data-choice="both">Both</button>
                                                 </span>
+                                                <span></span>
+                                                <label class="control-label">, because I know that the Kabbage is...</label>
+                                                <button id="open-buttons" type="button" class="btn btn-xs btn-danger hidden">Somewhere else?</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" name="q" class="form-control" placeholder="where could it be?">
+                                                    <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span>&nbsp;Start Foraging</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div id="search-progress" class="progress progress-striped active hidden">
+                                                <div class="progress-bar" style="width: 100%"></div>
                                             </div>
                                         </div>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar" style="width: 100%"></div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -63,8 +67,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    {% include "search/results.html" %}
+                <div id="results-container" class="col-lg-8 col-lg-offset-2">
                 </div>
             </div>
         </div>
