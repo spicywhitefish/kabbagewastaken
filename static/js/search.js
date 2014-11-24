@@ -15,6 +15,7 @@ function loadPage() {
     repopulateSearchForm();
 }
 function addListeners() {
+    var form_enabled = false;
     $(".search-source-btn").click(function() {
         var $this = $(this);
         $this.css('height', "");
@@ -37,6 +38,12 @@ function addListeners() {
         );
         // Show the "somewhere else" button
         $("#open-buttons").fadeIn(200).removeClass("hidden");
+        // Enable search submit button
+        $("#search-submit").prop("disabled", false);
+        // Enable search form
+        form_enabled = true;
+        // Set hidden source input
+        $("input[name=source]").val($this.data("choice"));
     });
     $("#open-buttons").click(function(event){
         // Hide this button
@@ -51,25 +58,35 @@ function addListeners() {
             );
         });
         $("#both-button").html("both");
+        // Disable the search button
+        $("#search-submit").prop("disabled", true);
+        // Disable the search form
+        form_enabled = false;
     });
     $("#search-form").submit(function(event){
-        var $this = $(this);
-        event.preventDefault();
-        $search_progress = $("#search-progress");
-        $search_progress.fadeIn(200).removeClass("hidden");
-        $.ajax({
-            type: "POST",
-            data: $this.serialize(),
-            dataType: "json",
-            success: function(response) {
-                $search_progress.fadeOut(200);
-                $("#results-container").html(response['reason']);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                $search_progress.fadeOut(200);
-                $("#results-container").html(jQuery.parseJSON(jqXHR.responseText)['reason']);
-            }
-        });
+        if(form_enabled) {
+            newQuerystring = $("#search-form :input[name!='csrfmiddlewaretoken']").serialize();
+            history.pushState({}, "", "?"+newQuerystring);
+            var $this = $(this);
+            event.preventDefault();
+            $search_progress = $("#search-progress");
+            $search_progress.fadeIn(200).removeClass("hidden");
+            $.ajax({
+                type: "POST",
+                data: $this.serialize(),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    $search_progress.fadeOut(200);
+                    $("#results-container").html(response['reason']);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    $search_progress.fadeOut(200);
+                    $("#results-container").html(jQuery.parseJSON(jqXHR.responseText)['reason']);
+                }
+            });
+        }
     });
 }
 function repopulateSearchForm() {
