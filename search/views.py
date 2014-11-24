@@ -16,7 +16,7 @@ def search(request):
         response_data = {}
         if form.is_valid():
             source = form.cleaned_data['source']
-            results_context = {}
+            results_context = {'source': form.cleaned_data['source']}
             has_results = False
             if source in ('twitter', 'both'):
                 # Search Twitter

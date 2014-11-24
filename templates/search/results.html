@@ -1,38 +1,43 @@
 <h2>Any luck finding it this time?</h2>
+{% if source == "both" %}
 <ul class="nav nav-tabs results-tabs">
-{#    TODO: Make this a loop#}
     <li class="active"><a href="#wikipedia" data-toggle="tab" aria-expanded="true">Articles</a></li>
     <li><a href="#twitter" data-toggle="tab" aria-expanded="false">Tweets</a></li>
 </ul>
+{% endif %}
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="wikipedia">
-        {% if wiki_error %}
-            {{ wiki_error }}
-        {% else %}
-        <div class="list-group">
-            {% for result in wiki_results %}
-                <div class="list-group-item">
-                    <div class="list-group-item-text">{{ result|safe }}</div>
-                </div>
-            {% empty %}
-                <h3>No Articles were found</h3>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-    <div class="tab-pane fade-in" id="twitter">
-        {% if twitter_error %}
-            {{ twitter_error }}
-        {% else %}
+    {% if source == "both" or source == "wikipedia" %}
+        <div class="{% if source == "both" %}tab-pane fade active in{% endif %}" id="wikipedia">
+            {% if wiki_error %}
+                {{ wiki_error }}
+            {% else %}
             <div class="list-group">
-                {% for result in twitter_results %}
+                {% for result in wiki_results %}
                     <div class="list-group-item">
-                        <p class="list-group-item-text">{{ result }}</p>
+                        <div class="list-group-item-text">{{ result|safe }}</div>
                     </div>
                 {% empty %}
-                    <h3>No Tweets were found</h3>
+                    <h3>No Articles were found</h3>
                 {% endfor %}
             </div>
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if source == "both" or source == "twitter" %}
+        <div class="{% if source == "both" %}tab-pane fade-in{% endif %}" id="twitter">
+            {% if twitter_error %}
+                {{ twitter_error }}
+            {% else %}
+                <div class="list-group">
+                    {% for result in twitter_results %}
+                        <div class="list-group-item">
+                            <p class="list-group-item-text">{{ result }}</p>
+                        </div>
+                    {% empty %}
+                        <h3>No Tweets were found</h3>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
